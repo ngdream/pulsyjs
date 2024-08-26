@@ -6,8 +6,7 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ngdream.github.io',
-  base : "/pulsyjs",
+  site: 'https://pulsy.js.org',
   markdown: {
     smartypants: true,
     syntaxHighlight: "shiki",
