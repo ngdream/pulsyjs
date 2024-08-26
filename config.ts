@@ -6,7 +6,7 @@ export const SITE = {
   desc: "Don't let state management stress you out. Let Pulsy take the pulse of your React app and keep things running smoothly.",
   title: "Pulsy",
   ogImage: "og-image.jpg",
-  repo: "https://github.com/ngdream/pulsy-docs",
+  repo: "https://github.com/ngdream/pulsyjs",
 };
 
 export const LOCALE = {
