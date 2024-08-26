@@ -39,6 +39,7 @@ export const ICONS: { [key: string]: IconComponent } = {
   Mastodon,
 };
 
+
 export const getIconByName = (name: string): IconComponent | null => {
   return ICONS[name] || null;
 };
