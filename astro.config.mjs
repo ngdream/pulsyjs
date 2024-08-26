@@ -6,7 +6,8 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://pulsy.js.org",
+  site: 'https://pulsyjs.github.io',
+  base : "pulsyjs",
   markdown: {
     smartypants: true,
     syntaxHighlight: "shiki",
