@@ -1,7 +1,7 @@
 {
   "name": "pulsy-docs",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "Documentation template using AstroJS and Shadcn",
   "author": "Hyperoot <rajesh@hyperoot.dev>",
   "license": "MIT",
@@ -44,6 +44,7 @@
     "cmdk": "^1.0.0",
     "fuse.js": "^7.0.0",
     "lucide-react": "^0.411.0",
+    "pulsy-docs": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rehype-external-links": "^3.0.0",

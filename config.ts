@@ -1,12 +1,12 @@
 import type { SocialObjects } from "@/lib/types";
 
 export const SITE = {
-  website: "https://hyperoot.dev", // replace this with your deployed domain
-  author: "HYP3R00T",
-  desc: "Documentation template using Astro and Shadcn",
-  title: "CelestialDocs",
+  website: "https://pulsy.js.org",
+  author: "ngdream",
+  desc: "Don't let state management stress you out. Let Pulsy take the pulse of your React app and keep things running smoothly.",
+  title: "Pulsy",
   ogImage: "og-image.jpg",
-  repo: "https://github.com/HYP3R00T/CelestialDocs",
+  repo: "https://github.com/ngdream/pulsy-docs",
 };
 
 export const LOCALE = {
@@ -24,12 +24,9 @@ export const menu_items: { title: string; href: string }[] = [
 // Just works with top-level folders and files. For files, don't add extension as it looks for the slug, and not the file name.
 export const side_nav_menu_order: string[] = [
   "getting-started",
-  "guides",
-  "guides/pages",
-  "guides/table-of-contents",
-  "guides/sidebar-navigation",
-  "custom-components",
-  "reference",
+  "core-concepts",
+  "api-references",
+  "example",
 ];
 
 // Don't delete anything. You can use 'true' or 'false'.
@@ -49,98 +46,15 @@ export const docconfig = {
 export const Socials: SocialObjects = [
   {
     name: "Github",
-    href: "https://github.com/HYP3R00T/",
+    href: "https://github.com/ngdream/",
     linkTitle: ` ${SITE.title} on Github`,
     active: true,
   },
-  {
-    name: "Facebook",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Facebook`,
-    active: false,
-  },
-  {
-    name: "Instagram",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Instagram`,
-    active: false,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on LinkedIn`,
-    active: false,
-  },
+
   {
     name: "Mail",
-    href: "mailto:rajesh@hyperoot.dev",
+    href: "mailto:ngdream1953@gmail.com",
     linkTitle: `Send an email to ${SITE.title}`,
-    active: true,
-  },
-  {
-    name: "Twitter",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Twitter`,
-    active: false,
-  },
-  {
-    name: "Twitch",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Twitch`,
-    active: false,
-  },
-  {
-    name: "YouTube",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on YouTube`,
-    active: false,
-  },
-  {
-    name: "WhatsApp",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on WhatsApp`,
-    active: false,
-  },
-  {
-    name: "Snapchat",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Snapchat`,
-    active: false,
-  },
-  {
-    name: "Pinterest",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Pinterest`,
-    active: false,
-  },
-  {
-    name: "Discord",
-    href: "https://discord.gg/tWZRBhaPhd",
-    linkTitle: `${SITE.title} on Discord`,
-    active: false,
-  },
-  {
-    name: "GitLab",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on GitLab`,
-    active: false,
-  },
-  {
-    name: "Reddit",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Reddit`,
-    active: false,
-  },
-  {
-    name: "Telegram",
-    href: "https://github.com/HYP3R00T/",
-    linkTitle: `${SITE.title} on Telegram`,
-    active: false,
-  },
-  {
-    name: "Mastodon",
-    href: "https://mastodon.social/@hyp3r00t",
-    linkTitle: `${SITE.title} on Mastodon`,
     active: true,
   },
 ];

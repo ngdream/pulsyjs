@@ -1,0 +1,144 @@
+---
+title: Core concept
+hide_breadcrumbs: true
+---
+
+
+# **Core Concepts of Pulsy**
+
+Pulsy offers a simple and powerful state management system for React applications. Understanding the core concepts of Pulsy will help you take full advantage of its features and build efficient, scalable applications.
+
+## **1. Stores**
+
+### **What is a Store?**
+A store in Pulsy is a container that holds a piece of state. Each store is identified by a unique name and can hold any type of value, whether it’s a primitive, object, or even a function.
+
+### **Creating a Store**
+
+To create a store, use the `createStore` function:
+
+```typescript
+import { createStore } from 'pulsy';
+
+createStore('themeStore', 'light');
+```
+
+In this example, `themeStore` is the name of the store, and `'light'` is its initial value.
+
+### **Accessing and Modifying Store Values**
+
+You can access and modify store values using the `usePulsy` hook within your components:
+
+```typescript
+import { usePulsy } from 'pulsy';
+
+function ThemeToggle() {
+  const [theme, setTheme] = usePulsy('themeStore');
+
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Toggle Theme
+    </button>
+  );
+}
+```
+
+## **2. Reactivity**
+
+### **Reactive Updates**
+
+Pulsy ensures that your components automatically re-render whenever the value of a store they depend on changes. This is done using the `usePulsy` hook, which subscribes to updates from the store.
+
+### **Example of Reactivity**
+
+```typescript
+import { createStore, usePulsy } from 'pulsy';
+
+createStore('countStore', 0);
+
+function Counter() {
+  const [count, setCount] = usePulsy('countStore');
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+In this example, the `Counter` component re-renders automatically whenever `countStore` is updated.
+
+## **3. Computed Stores**
+
+### **What are Computed Stores?**
+
+Computed stores derive their values from other stores. They are automatically updated whenever the source stores change, making them useful for managing derived state.
+
+### **Creating a Computed Store**
+
+```typescript
+import { createComputedStore, usePulsy } from 'pulsy';
+
+createComputedStore('totalStore', () => {
+  const item1 = usePulsy('item1Store')[0];
+  const item2 = usePulsy('item2Store')[0];
+  return item1 + item2;
+}, ['item1Store', 'item2Store']);
+```
+
+Here, `totalStore` is a computed store that automatically updates whenever `item1Store` or `item2Store` changes.
+
+## **4. Middleware**
+
+### **What is Middleware?**
+
+Middleware allows you to intercept and modify state changes before they are applied to a store. This is useful for logging, debugging, or enforcing rules on state updates.
+
+### **Adding Middleware**
+
+```typescript
+import { addMiddleware } from 'pulsy';
+
+addMiddleware('countStore', (newValue, oldValue, storeName) => {
+  console.log(`${storeName} changed from ${oldValue} to ${newValue}`);
+  return newValue;
+});
+```
+
+In this example, a middleware is added to `countStore` to log every state change.
+
+## **5. Persistence**
+
+### **Persisting State**
+
+Pulsy allows you to persist store values across sessions, so your application can retain state even after a page reload.
+
+### **Enabling Persistence**
+
+```typescript
+createStore('userStore', null, { persist: true });
+```
+
+By setting the `persist` option to `true`, `userStore` will retain its value across sessions.
+
+## **6. Debugging with DevTools**
+
+### **DevTools Configuration**
+
+Pulsy comes with built-in DevTools support to help you monitor and debug state changes in your application.
+
+### **Enabling DevTools**
+
+```typescript
+import { configureDevTools } from 'pulsy';
+
+configureDevTools({ enableDevTools: true, logLevel: 'debug' });
+```
+
+With DevTools enabled, you can see detailed logs and track state changes in your browser’s console.
+
+---
+
+This **Core Concepts** guide provides a detailed overview of the key features and functionalities of Pulsy. It covers everything from basic store management to advanced features like computed stores, middleware, persistence, and DevTools. Understanding these concepts is crucial for building effective and efficient state management solutions in your React applications.

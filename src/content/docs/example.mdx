@@ -1,0 +1,332 @@
+---
+title: Example
+hide_breadcrumbs: true
+---
+### **Pulsy Examples**
+
+---
+
+## **1. Basic Store Example**
+
+**Description:** This example demonstrates creating and using a basic store with Pulsy.
+
+```typescript
+import React from 'react';
+import { createStore, usePulsy } from 'pulsy';
+
+// Create a store with an initial value
+createStore('counterStore', 0);
+
+function App() {
+  const [count, setCount] = usePulsy('counterStore');
+
+  return (
+    <div>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **2. Persistence Example**
+
+**Description:** This example demonstrates how to persist store data across sessions using `localStorage`.
+
+```typescript
+import React from 'react';
+import { createStore, usePulsy } from 'pulsy';
+
+// Create a persistent store
+createStore('persistentStore', 'Hello, World!', { persist: true });
+
+function App() {
+  const [message, setMessage] = usePulsy('persistentStore');
+
+  return (
+    <div>
+      <h1>{message}</h1>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **3. Middleware Example**
+
+**Description:** This example shows how to use middleware to log every state change.
+
+```typescript
+import React from 'react';
+import { createStore, usePulsy, addMiddleware } from 'pulsy';
+
+// Create a store
+createStore('middlewareStore', 0);
+
+// Add middleware to log state changes
+addMiddleware('middlewareStore', (nextValue, prevValue, storeName) => {
+  console.log(`State change in ${storeName}:`, prevValue, '->', nextValue);
+  return nextValue;
+});
+
+function App() {
+  const [value, setValue] = usePulsy('middlewareStore');
+
+  return (
+    <div>
+      <h1>Value: {value}</h1>
+      <button onClick={() => setValue(value + 1)}>Increment</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **4. Computed Store Example**
+
+**Description:** This example demonstrates creating a computed store that derives its value from other stores.
+
+```typescript
+import React from 'react';
+import { createStore, createComputedStore, usePulsy } from 'pulsy';
+
+// Create base stores
+createStore('numberStore1', 10);
+createStore('numberStore2', 20);
+
+// Create a computed store that sums the values of the two base stores
+createComputedStore('sumStore', () => {
+  const num1 = usePulsy('numberStore1')[0];
+  const num2 = usePulsy('numberStore2')[0];
+  return num1 + num2;
+}, ['numberStore1', 'numberStore2']);
+
+function App() {
+  const [sum] = usePulsy('sumStore');
+
+  return (
+    <div>
+      <h1>Sum: {sum}</h1>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **5. Time Travel Example**
+
+**Description:** This example shows how to use time travel debugging to undo and redo state changes.
+
+```typescript
+import React from 'react';
+import { createStore, useTimeTravel } from 'pulsy';
+
+// Create a store
+createStore('timeTravelStore', 0);
+
+function App() {
+  const [value, setValue, undo, redo] = useTimeTravel('timeTravelStore');
+
+  return (
+    <div>
+      <h1>Value: {value}</h1>
+      <button onClick={() => setValue(value + 1)}>Increment</button>
+      <button onClick={undo}>Undo</button>
+      <button onClick={redo}>Redo</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **6. Namespaced Store Example**
+
+**Description:** This example demonstrates the use of namespaced stores for better organization.
+
+```typescript
+import React from 'react';
+import { createNamespacedStore, usePulsy } from 'pulsy';
+
+// Create a namespaced store
+const myNamespaceStore = createNamespacedStore('myNamespace')('key', 'Initial Value');
+
+function App() {
+  const [value, setValue] = usePulsy(myNamespaceStore);
+
+  return (
+    <div>
+      <h1>Namespaced Value: {value}</h1>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **7. Action Creators Example**
+
+**Description:** This example illustrates how to use action creators to manage complex state changes.
+
+```typescript
+import React from 'react';
+import { createStore, createActions, usePulsy } from 'pulsy';
+
+// Create a store with an initial state
+createStore('actionStore', { count: 0 });
+
+// Create actions for incrementing and decrementing the count
+const actions = createActions('actionStore', {
+  increment: (state) => ({ ...state, count: state.count + 1 }),
+  decrement: (state) => ({ ...state, count: state.count - 1 }),
+});
+
+function App() {
+  const [state, setState] = usePulsy('actionStore');
+
+  return (
+    <div>
+      <h1>Count: {state.count}</h1>
+      <button onClick={() => setState(actions.increment())}>Increment</button>
+      <button onClick={() => setState(actions.decrement())}>Decrement</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **8. Composed Store Example**
+
+**Description:** This example demonstrates how to compose multiple stores into a single store.
+
+```typescript
+import React from 'react';
+import { createStore, composeStores, usePulsy } from 'pulsy';
+
+// Create individual stores
+createStore('firstNameStore', 'John');
+createStore('lastNameStore', 'Doe');
+
+// Compose the stores into a single store
+composeStores('fullNameStore', {
+  firstName: 'firstNameStore',
+  lastName: 'lastNameStore',
+});
+
+function App() {
+  const [fullName] = usePulsy('fullNameStore');
+
+  return (
+    <div>
+      <h1>Full Name: {fullName.firstName} {fullName.lastName}</h1>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **9. DevTools Example**
+
+**Description:** This example shows how to use DevTools for enhanced logging and performance tracking.
+
+```typescript
+import React from 'react';
+import { createStore, usePulsy, configureDevTools } from 'pulsy';
+
+// Configure DevTools
+configureDevTools({
+  enableDevTools: true,
+  logLevel: 'info',
+  trackPerformance: true,
+});
+
+// Create a store
+createStore('devToolsStore', 0);
+
+function App() {
+  const [count, setCount] = usePulsy('devToolsStore');
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **10. Visualizing State Changes Example**
+
+**Description:** This example demonstrates how to visualize state changes using DevTools.
+
+```typescript
+import React from 'react';
+import { createStore, usePulsy, devTools } from 'pulsy';
+
+// Create a store
+createStore('visualizationStore', 'Initial State');
+
+function App() {
+  const [value, setValue] = usePulsy('visualizationStore');
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+    devTools.trackStateChange('visualizationStore', newValue);
+  };
+
+  return (
+    <div>
+      <h1>Value: {value}</h1>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      />
+      <button onClick={() => devTools.visualizeStateChanges()}>Visualize State Changes</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+This Markdown file provides a comprehensive set of examples that cover a wide range of Pulsy's features, each of which can be used independently to explore different aspects of the library.

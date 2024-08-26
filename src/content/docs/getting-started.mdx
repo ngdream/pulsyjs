@@ -2,53 +2,125 @@
 title: Getting Started
 hide_breadcrumbs: true
 ---
-import Callout from "@/components/Callout.astro";
 
-**_Celestial Docs_** is a documentation theme built on top of the [Astro](https://astro.build/) framework. This guide will help you get started with a new project. 
 
-## Create a new project
+# **Getting Started with Pulsy**
 
-To create your own documentation site using CelestialDocs, follow these steps:
-- Visit the [CelestialDocs GitHub](https://github.com/HYP3R00T/CelestialDocs) repository.
-- Click on the "Use this template" button.
-- Follow the prompts to create a new repository using this template.
+Pulsy is a powerful state management library designed to be simple, scalable, and efficient. This guide will help you get started with Pulsy in your React application.
 
-<Callout variant="info">
-Try CelestialDocs in your browser: [open the template on StackBlitz](https://stackblitz.com/github/HYP3R00T/CelestialDocs)
-</Callout>
+## **Installation**
 
-## Local Setup
-After creating your repository, follow these steps to set up the project locally:
-
-Clone your repository:
+To get started with Pulsy, you need to install it via npm or yarn:
 
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+# Using npm
+npm install pulsy
+
+# Using yarn
+yarn add pulsy
 ```
 
-Install dependencies:
+## **Basic Setup**
 
-```bash
-npm install
+Pulsy can be easily integrated into your React application. Follow these steps to set up your first store and use it in a component.
+
+### **1. Create a Store**
+
+First, create a store that will hold your application's state. Pulsy stores can be created using the `createStore` function.
+
+```typescript
+import { createStore } from 'pulsy';
+
+// Create a store with an initial value
+createStore('counterStore', 0);
 ```
 
-Start the development server:
+### **2. Use the Store in a Component**
 
-```bash
-npm run dev
+Next, use the `usePulsy` hook to interact with the store within your React components.
+
+```typescript
+import React from 'react';
+import { usePulsy } from 'pulsy';
+
+function Counter() {
+  const [count, setCount] = usePulsy('counterStore');
+
+  return (
+    <div>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
 ```
 
-Your documentation site will be available at `http://localhost:4321`.
+### **3. Adding the Component to Your App**
 
-## Customizing Your Documentation
-CelestialDocs is built to be highly customizable. You can start editing the markdown files in the content folder to create your own documentation pages.
+Finally, add the component to your app.
 
-To add new pages or sections, simply create new markdown files and folders inside the content directory, following the existing structure.
+```typescript
+import React from 'react';
+import Counter from './Counter';
 
-## Next Steps
+function App() {
+  return (
+    <div>
+      <Counter />
+    </div>
+  );
+}
 
-- **Configure:** Learn about common options in ["Guides"](/guides).
-- **Authoring Content in Markdown:** Learn about options and features of ["Markdown"](/guides/authoring-content-in-md) guide.
-- **Components:** Discover built-in callout and more in the ["Components"](/custom-components) guide.
-- **Deploy:** Publish your work with the ["Deploy your site"](/resources/deployment) guide in the Astro docs.
+export default App;
+```
+
+Now, when you run your application, you should see a counter that increments every time you click the button. This simple example demonstrates how easy it is to use Pulsy for state management in a React application.
+
+## **Advanced Configuration**
+
+Pulsy also supports advanced configuration options, including persistence, middleware, and computed stores. You can configure Pulsy stores globally or for individual stores to suit your application's needs.
+
+### **1. Persistence**
+
+To persist store data across sessions, you can enable persistence when creating a store:
+
+```typescript
+createStore('persistentStore', 'Initial Value', { persist: true });
+```
+
+### **2. Middleware**
+
+You can add middleware to a store to intercept and modify state changes:
+
+```typescript
+import { addMiddleware } from 'pulsy';
+
+addMiddleware('counterStore', (nextValue, prevValue, storeName) => {
+  console.log(`State change in ${storeName}:`, prevValue, '->', nextValue);
+  return nextValue;
+});
+```
+
+### **3. Computed Stores**
+
+Pulsy allows you to create computed stores that derive their values from other stores:
+
+```typescript
+import { createComputedStore, usePulsy } from 'pulsy';
+
+createComputedStore('sumStore', () => {
+  const num1 = usePulsy('numberStore1')[0];
+  const num2 = usePulsy('numberStore2')[0];
+  return num1 + num2;
+}, ['numberStore1', 'numberStore2']);
+```
+
+## **Conclusion**
+
+Pulsy is a flexible and powerful state management tool for React. Whether you're building a small application or a large-scale project, Pulsy can help you manage your state effectively. Explore the [documentation](#) for more advanced usage and best practices.
+
+---
+
+This **Getting Started** guide provides a quick introduction to Pulsy, including installation, basic setup, and advanced configuration options. It’s a great starting point for new users to understand how to integrate and utilize Pulsy in their projects.

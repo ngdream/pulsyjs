@@ -1,0 +1,213 @@
+---
+title: Api references
+hide_breadcrumbs: true
+---
+
+
+# Pulsy API Reference
+
+## `configurePulsy`
+
+Configures the Pulsy state management system.
+
+```typescript
+function configurePulsy(config: PulsyConfig): void;
+```
+
+### Parameters
+
+- `config`: An object that may include:
+  - `enableDevTools` (boolean): Enables DevTools (default: `process.env.NODE_ENV === "development"`).
+  - `defaultPersist` (boolean): Default value for persistence (default: `false`).
+  - `onStoreCreate` (function): Callback called when a store is created.
+  - `onStoreUpdate` (function): Callback called when a store is updated.
+  - `persist` (boolean): Global persistence setting.
+  - `defaultMemoize` (boolean): Default memoization setting (default: `false`).
+
+## `createStore`
+
+Creates a new store.
+
+```typescript
+function createStore<T>(
+  name: string,
+  initialValue: T,
+  options?: {
+    persist?: boolean;
+    middleware?: Middleware<T>[];
+    memoize?: boolean;
+  }
+): void;
+```
+
+### Parameters
+
+- `name`: Unique name for the store.
+- `initialValue`: Initial value of the store.
+- `options` (optional): Configuration options for the store.
+  - `persist` (boolean): Whether to persist the store (default: inherited from configuration).
+  - `middleware` (Middlewar[]): Array of middleware functions.
+  - `memoize` (boolean): Whether to memoize the store (default: inherited from configuration).
+
+## `getStoreValue`
+
+Retrieves the value of a store.
+
+```typescript
+function getStoreValue<T>(name: string): T | undefined;
+```
+
+### Parameters
+
+- `name`: Name of the store to retrieve the value from.
+
+## `initializePulsy`
+
+Initializes multiple stores at once.
+
+```typescript
+function initializePulsy(
+  storeConfigs: Record<string, any>,
+  config?: PulsyConfig
+): void;
+```
+
+### Parameters
+
+- `storeConfigs`: An object where keys are store names and values are their initial values.
+- `config` (optional): Configuration for Pulsy.
+
+## `usePulsy`
+
+Custom hook to use a Pulsy store.
+
+```typescript
+function usePulsy<T>(name: string): [T, (newValue: T | ((prevValue: T) => T)) => Promise<void>];
+```
+
+### Parameters
+
+- `name`: Name of the store to use.
+
+### Returns
+
+- `[value, setter]`: 
+  - `value`: Current value of the store.
+  - `setter`: Function to update the store.
+
+## `createNamespacedStore`
+
+Creates a namespaced store.
+
+```typescript
+const createNamespacedStore = (namespace: string) => <T>(key: string) => usePulsy<T>(`${namespace}:${key}`);
+```
+
+### Parameters
+
+- `namespace`: Namespace for the store.
+- `key`: Key within the namespace.
+
+## `addMiddleware`
+
+Adds middleware to an existing store.
+
+```typescript
+function addMiddleware<T>(name: string, middleware: Middleware<T>): void;
+```
+
+### Parameters
+
+- `name`: Name of the store.
+- `middleware`: Middleware function to add.
+
+## `useTimeTravel`
+
+Custom hook for time travel capabilities in a store.
+
+```typescript
+function useTimeTravel<T>(name: string): [
+  T,
+  (newValue: T | ((prevValue: T) => T)) => Promise<void>,
+  () => void,
+  () => void,
+  T[]
+];
+```
+
+### Parameters
+
+- `name`: Name of the store.
+
+### Returns
+
+- `[value, updateValue, undo, redo, history]`:
+  - `value`: Current value of the store.
+  - `updateValue`: Function to update the store and record history.
+  - `undo`: Function to revert to the previous state.
+  - `redo`: Function to redo the next state.
+  - `history`: Array of past values.
+
+## `createComputedStore`
+
+Creates a computed store that derives its value from other stores.
+
+```typescript
+function createComputedStore<T>(
+  name: string,
+  computeFn: () => T,
+  dependencies: string[]
+): void;
+```
+
+### Parameters
+
+- `name`: Name of the computed store.
+- `computeFn`: Function to compute the store value.
+- `dependencies`: Array of store names that the computed store depends on.
+
+## `composeStores`
+
+Composes multiple stores into a single store.
+
+```typescript
+function composeStores<T extends Record<string, any>>(
+  name: string,
+  storeMap: { [K in keyof T]: string }
+): [T, (updates: Partial<{ [K in keyof T]: any }>) => Promise<void>];
+```
+
+### Parameters
+
+- `name`: Name of the composed store.
+- `storeMap`: Map of composed store keys to store names.
+
+### Returns
+
+- `[composedStore, setComposedStore]`:
+  - `composedStore`: The composed store object.
+  - `setComposedStore`: Function to update the composed store.
+
+## `createActions`
+
+Creates action creators for a store.
+
+```typescript
+function createActions<S, T>(
+  storeName: string,
+  actionHandlers: Record<string, ActionHandler<S, T>>
+): Record<string, ActionCreator<T>>;
+```
+
+### Parameters
+
+- `storeName`: Name of the store.
+- `actionHandlers`: Object mapping action types to action handlers.
+
+### Returns
+
+- `actions`: Object mapping action types to action creator functions.
+
+---
+
+This reference should help you understand and use the Pulsy API effectively. If you have any more questions or need further details, feel free to ask!
