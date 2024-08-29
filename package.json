@@ -2,14 +2,14 @@
   "name": "pulsy-docs",
   "type": "module",
   "version": "0.0.1",
-  "description": "Documentation template using AstroJS and Shadcn",
-  "author": "Hyperoot <rajesh@hyperoot.dev>",
+  "description": "pulsy official documention ",
+  "author": "ngdream",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/HYP3R00T/CelestialDocs"
+    "url": "https://github.com/ngdream/pulsyjs"
   },
-  "homepage": "https://celestialdocs.hyperoot.dev/",
+  "homepage": "https://pulsy.js.org",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -21,7 +21,9 @@
     "docs",
     "documentation",
     "astro",
-    "withastro"
+    "withastro",
+    "pulsy",
+    "state management"
   ],
   "dependencies": {
     "@astrojs/check": "^0.9.3",
